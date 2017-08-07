@@ -66,7 +66,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											});
 											});
 										</script>
-									<li><a href="#news" class="scroll">News</a></li>
+									<li><a href="tournaments.php">Tournaments</a></li>
 									<li><a href="contact.php">Contact</a></li>
 								</ul>	
 								<div class="clearfix"> </div>
@@ -312,7 +312,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<li><a href="about.html">About</a></li>
 									<li><a href="groundlist.html">Grounds</a></li>
 									<li><a href="gallery.html">Gallery</a></li>
-									<li><a href="#news" class="scroll">News</a></li>
+									<li><a href="tournaments.php">Tournaments</a></li>
 									<li><a href="contact.html">Contact</a></li>
 								</ul>
 							</div>

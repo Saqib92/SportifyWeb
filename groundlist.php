@@ -90,7 +90,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     });
                                 });
                             </script>
-                            <li><a href="index.php">News</a>
+                            <li><a href="tournaments.php">Tournaments</a></li>
                             </li>
                             <li><a href="contact.php">Contact</a>
                             </li>
@@ -167,10 +167,100 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     }
                                     mysqli_close($mysqli);
 
+                                        //Booking System for ground
                                     if (isset($_POST['bookMe'])) {
                                         $mysqli = @new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
                                     // Check connection
-                                    if (mysqli_connect_errno()){  //if 2
+                                    if (mysqli_connect_errno()){
+                                        printf("Unable to connect to database: %s",
+                                        mysqli_connect_error());
+                                        exit();
+                                    }
+                                    // Escape any unsafe characters before query database
+                                    $id = $_POST['bookMe'];
+                                    $book = "Booked";
+                                    $available = "yes";
+                                    if ($id == 1) {
+                                    $sql = "SELECT * FROM groundlist WHERE id = '" . $id ."' AND groundAvailable = '".$available."' ";
+                                    $result = $mysqli->query($sql);
+                                    // if one row is returned, username and password are valid
+                                    if (is_object($result) && $result->num_rows == 1) {
+                                        $sql = "UPDATE groundlist SET groundAvailable = '$book' WHERE id = $id";
+                                        $result = $mysqli->query($sql);
+                                        if ($result === TRUE) { //if 3
+                                            
+                                            $alert = "<div class='alert alert-success'>
+                                            <strong>Success!</strong> Thanks For Booking.
+                                            </div>'";
+                                            echo $alert;
+                                            echo "<meta http-equiv='refresh' content='0'>";
+                                            }
+                                            else { // else 3
+                                                echo "Error: " . $sql . "<br>" . $mysqli->error;
+                                                }
+                                    }
+                                    else{
+                                        echo "<script>alert('Ground Not Available');</script>";
+                                        }
+                                    }
+                                    elseif ($id == 2) {
+                                        $sql = "SELECT * FROM groundlist WHERE id = '" . $id ."' AND groundAvailable = '".$available."' ";
+                                    $result = $mysqli->query($sql);
+                                    // if one row is returned, username and password are valid
+                                    if (is_object($result) && $result->num_rows == 1) {
+                                        $sql = "UPDATE groundlist SET groundAvailable = '$book' WHERE id = $id";
+                                        $result = $mysqli->query($sql);
+                                        if ($result === TRUE) { //if 3
+                                            echo "<script>alert('Thanks For booking');</script>";
+                                            echo "<meta http-equiv='refresh' content='0'>";
+                                            }
+                                            else { // else 3
+                                                echo "Error: " . $sql . "<br>" . $mysqli->error;
+                                                }
+                                    }
+                                    else{
+                                        echo "<script>alert('Ground Not Available');</script>";
+                                        }
+                                    }
+                                    }
+                                    
+                                    ?> 
+                                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                                    <button type="submit" class="btn btn-primary" value="1" name="bookMe" role="button">Book Now</button>
+                                    </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <img src="images/2.png" alt="Ground Picture">
+                                     <div class="caption">
+                                    <?php
+                                    // Include required MySQL confiquration file and fuctions
+                                    require_once('config.php');
+                                    $mysqli = @new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+                                    // Check connection
+                                    if (mysqli_connect_errno()) {
+                                        printf("Unable to connect to database: %s",
+                                        mysqli_connect_error());
+                                        exit();
+                                        }
+                                    // Create connection
+                                        $result = mysqli_query($mysqli,"SELECT * FROM groundlist");
+                                        while($row = mysqli_fetch_array($result)){
+                                            if($row['id'] == 2){
+                                                echo "<h2>" . $row['groundName'] . "</h2>";
+                                                echo "<p>" . $row['groundDetail'] . "</p>";
+                                                }
+                                    }
+                                    mysqli_close($mysqli);
+
+                                     /*   //Booking system for ground
+                                    if (isset($_POST['bookMe'])) {
+                                        $mysqli = @new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+                                    // Check connection
+                                    if (mysqli_connect_errno()){ 
                                         printf("Unable to connect to database: %s",
                                         mysqli_connect_error());
                                         exit();
@@ -196,23 +286,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     else{
                                         echo "<script>alert('Ground Not Available');</script>";
                                         }
-                                    }
+                                    }*/
                                     ?> 
                                     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                                    <button type="submit" class="btn btn-primary" value="1" name="bookMe" role="button">Book Now</button>
+                                    <button type="submit" class="btn btn-primary" value="2" name="bookMe" role="button">Book Now</button>
                                     </form>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-4">
-                                <div class="thumbnail">
-                                    <img src="images/2.png" alt="Ground Picture">
-                                    <div class="caption">
-                                        <h2>Asghar Ali Shah</h2>
-                                        <p>Asghar Ali shah is a Lush green International standard stadium for Hardball cricket. Located in North Nazimabad near Board Office.</p>
-                                        <p>
-                                            <button href="#" type="submit" class="btn btn-primary" role="button">Book Now</button>
                                     </div>
                                 </div>
                             </div>
@@ -306,7 +385,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <li><a href="about.php">About</a></li>
                                     <li><a href="groundlist.php">Grounds</a></li>
                                     <li><a href="gallery.php">Gallery</a></li>
-                                    <li><a href="#news" class="scroll">News</a></li>
+                                    <li><a href="tournaments.php">Tournaments</a></li>
                                     <li><a href="contact.php">Contact</a></li>
                                 </ul>
                             </div>
